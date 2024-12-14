@@ -1,0 +1,93 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes - Be real and Be Focused </title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas/dist/html2canvas.min.js"></script>
+
+</head>
+<body>
+    <div class="main_quote_box">
+        <div class="quote_container" id="quote-container">
+        <div class="quote_box">
+            <div class="quote_header">
+                <div class="quoter_id">
+                    <img src="" alt="" id="profile-img">
+                    <div class="quoter_name_box">
+                        <div class="name_box">
+                            <h2 id="name"> 
+                            <h3><img src="./images/checkbox.png" alt="Checkbox" width="80" height="80"></h3>
+                        </h2>
+                        </div>
+                        <span id="username">@</span>
+                    </div>
+                </div>
+
+                <div class="social_icon">
+                    <a href="https://twitter.com/naval" target="_blank">
+                        <i class="ri-twitter-x-fill"></i>
+                    </a>
+                </div>
+            </div>
+
+            <p class="main_quote" id="x-post">
+                quote
+            </p>
+        </div>
+    </div>
+    </div>
+
+    <button class="screen-shot-btn" id="screenshot-btn">
+        Screenshot card
+    </button>
+
+    <script>
+        function getUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return {
+                name: urlParams.get('name'),
+                username: urlParams.get('username'),
+                profileImage: urlParams.get('profileImage'),
+                text: urlParams.get('text')
+            };
+        }
+
+        // Get the tweet data from URL parameters
+        const { name, username, profileImage, text } = getUrlParams();
+
+        // Populate the tweet data on the page
+        document.getElementById('name').textContent = name;
+        document.getElementById('username').textContent = `@${username}`;
+        document.getElementById('profile-img').src = profileImage;
+        document.getElementById('x-post').textContent = text;
+
+
+
+
+
+        document.getElementById('screenshot-btn').addEventListener('click', function () {
+            const container = document.getElementById('quote-container'); // Select the card container
+
+            // Use html2canvas to take a screenshot
+            html2canvas(container, {
+                backgroundColor: null, // Capture with the background (transparent if none specified)
+                useCORS: true // Handles cross-origin images
+            }).then(canvas => {
+                // Convert canvas to image
+                const imgData = canvas.toDataURL('image/png');
+                
+                // Create a link to download the image
+                const link = document.createElement('a');
+                link.href = imgData;
+                link.download = 'ted_screenshot.png'; // Filename for the downloaded image
+                link.click();
+            }).catch(error => {
+                console.error('Screenshot failed:', error);
+            });
+        });
+    </script>
+</body>
+</html>
